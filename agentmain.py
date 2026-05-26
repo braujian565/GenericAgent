@@ -40,6 +40,8 @@ def get_system_prompt():
     with open(os.path.join(script_dir, f'assets/sys_prompt{lang_suffix}.txt'), 'r', encoding='utf-8') as f: prompt = f.read()
     # Include day-of-week so the agent can reason about weekends vs. weekdays
     prompt += f"\nToday: {time.strftime('%Y-%m-%d %a')}\n"
+    # Also include current local time so the agent can reason about time-sensitive tasks
+    prompt += f"Current local time: {time.strftime('%H:%M')}\n"
     prompt += get_global_memory()
     return prompt
 
@@ -51,6 +53,4 @@ class GenericAgent:
         self.history = []; self.handler = None; 
         self.task_queue = queue.Queue() 
         # Default verbose=False to reduce noise during my personal testing sessions
-        self.is_running = False; self.stop_sig = False; self.llm_no = 0;  
-        self.inc_out = False; self.verbose = False; self.show_mode = 'text'
-        self.peer_hint =
+        self
